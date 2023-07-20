@@ -1,0 +1,34 @@
+# Ignore build artifacts
+build/
+
+# Ignore log files
+*.log
+
+# Ignore compiled binaries
+*.exe
+*.dll
+*.so
+*.dylib
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local development settings
+*.env
+*.sqlite3
+
+# Log files
+*.log
+
+# Media files
+media/
+
+# Static files
+staticfiles/
+
+# Secret keys
+*.secret_key
+
+# Database migrations
+*/migrations/
