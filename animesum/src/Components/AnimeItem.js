@@ -11,11 +11,11 @@ function AnimeItem()
     const [characters, setCharacters] = React.useState([]);
     const [showMore, setShowMore] = React.useState(false);
 
-    console.log("anime", anime);
+    // console.log("anime", anime);
     // destructuring anime
     let {
         title, title_japanese, synopsis, 
-        trailer,duration,aired, 
+        trailer,duration, aired, 
         season, images, rank, 
         score,scored_by, popularity, 
         status, rating, source } = anime
@@ -25,10 +25,33 @@ function AnimeItem()
         synopsis = synopsis?.substring(0, synopsis.length - 24);
 
     // if status is "Currently Airing", then transmit aired to a string, then aired = substring(0, aired.length - 5)
+    const airedYear = aired?.prop?.from?.year;
+
     if(status === "Currently Airing" && aired) 
     {
         aired = aired?.string;
         aired = aired.substring(0, aired.length - 5);
+    }
+    else
+    {
+        aired = aired?.string;
+    }
+
+    if(status === "Currently Airing")
+        status = "放送中";
+    else if(status === "Finished Airing")
+        status = "放送終了";
+
+    if (season)
+    {
+        if (season === "winter")
+            season = "冬";
+        else if (season === "spring")
+            season = "春";
+        else if (season === "summer")
+            season = "夏";
+        else if (season === "fall")
+            season = "秋";
     }
 
     // get anime based on id
@@ -44,7 +67,6 @@ function AnimeItem()
         const response = await fetch(`https://api.jikan.moe/v4/anime/${anime}/characters`);
         const data = await response.json();
         setCharacters(data.data);
-        // console.log("character", data.data);
     }
 
     useEffect(() => {
@@ -54,6 +76,12 @@ function AnimeItem()
 
     return(
         <AnimeItemStyled>
+            <div className="back">
+                <Link to="/">
+                    <i className="fas fa-arrow-left"></i>
+                    アニメ一覧へ
+                </Link>
+            </div>
             <h1>
                 {title_japanese}<br></br>{title}
             </h1>
@@ -71,7 +99,7 @@ function AnimeItem()
                         <p><span>人気ランキング: </span><span>{popularity} 位</span></p>
                         <p><span>放送状態: </span><span>{status}</span></p>
                         <p><span>原作: </span><span>{source}</span></p>
-                        <p><span>放送時期: </span><span>{season}</span></p>
+                        <p><span>放送時期: </span><span>{airedYear} {season}</span></p>
                         <p><span>1話の放送時間: </span><span>{duration}</span></p>
                     </div>
                 </div>
@@ -93,7 +121,7 @@ function AnimeItem()
                             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
                         </iframe> :
-                        <h3>Trailer not available</h3>
+                        <h3>動画は一時的に利用不可</h3>
                     }
                 </div>
                 <h3 className="title">キャラクター</h3>
@@ -105,7 +133,7 @@ function AnimeItem()
                             <div className="character">
                                 <img src={images?.jpg.image_url} alt="" />
                                 <h4>{name}</h4>
-                                <p>{role}</p>
+                                {/* <p>{role}</p> */}
                             </div>
                         </Link>
                     })}
@@ -118,6 +146,19 @@ function AnimeItem()
 const AnimeItemStyled = styled.div`
     padding: 3rem 18rem;
     background-color: #EDEDED;
+    .back{
+        position: absolute;
+        top: 2rem;
+        left: 2rem;
+        a{
+            font-weight: 600;
+            text-decoration: none;
+            color: #6babc7;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+    }
     h1{
         display: inline-block;
         font-size: 3rem;
@@ -200,9 +241,13 @@ const AnimeItemStyled = styled.div`
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         grip-gap: 2rem;
         background-color: #fff;
-        padding: 2rem;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
         border-radius: 20px;
-        border: 5px solid #78bfde;
+        border-top: 5px solid #e5e7eb;
         .character{
             padding: .4rem .6rem;
             border-radius: 7px;
@@ -210,6 +255,7 @@ const AnimeItemStyled = styled.div`
             transition: all .4s ease-in-out;
             img{
                 width: 100%;
+                object-fit: cover;
             }
             h4{
                 padding: .5rem 0;
