@@ -21,6 +21,10 @@ const reducer = (state, action) => {
             return {...state, popularAnime:action.payload, loading:false};
         case SEARCH:
             return {...state, searchResults:action.payload, loading:false};
+        case GET_UPCOMING_ANIME:
+            return {...state, upcomingAnime:action.payload, loading:false};
+        case GET_AIRING_ANIME:
+            return {...state, airingAnime:action.payload, loading:false};
         default:
             return state;
     }
@@ -51,6 +55,7 @@ export const GlobalContextProvider = ({children}) => {
         }
     }
 
+    // handle the submit button for search bar
     const handleSubmit = (e) => {
         e.preventDefault();
         if (search)
@@ -74,10 +79,23 @@ export const GlobalContextProvider = ({children}) => {
         dispatch({type: GET_POPULAR_ANIME, payload: data.data});
     }
 
-    //initial render
-    React.useEffect(() => {
-        getPopularAnime();
-    }, [])
+    // fetch upcoming anime
+    const getUpcomingAnime = async () => {
+        dispatch({type: LOADING})
+        const response = await fetch(`${baseUrl}/top/anime?filter=upcoming`);
+        const data = await response.json();
+        // console.log(data.data);
+        dispatch({type: GET_UPCOMING_ANIME, payload: data.data});
+    }
+
+    // fetch airing anime
+    const getAiringAnime = async () => {
+        dispatch({type: LOADING})
+        const response = await fetch(`${baseUrl}/top/anime?filter=airing&order_by=aired.from`);
+        const data = await response.json();
+        console.log(data.data);
+        dispatch({type: GET_AIRING_ANIME, payload: data.data});
+    }
     
     //search anime
     const searchAnime = async (anime) => {
@@ -86,6 +104,12 @@ export const GlobalContextProvider = ({children}) => {
         const data = await response.json();
         dispatch({type: SEARCH, payload: data.data});
     }
+
+    //initial render
+    React.useEffect(() => {
+        getPopularAnime();
+    }, [])
+
     return(
         <GlobalContext.Provider value={{
             // passing the state and dispatch to the global context.
@@ -94,6 +118,9 @@ export const GlobalContextProvider = ({children}) => {
             handleSubmit,
             searchAnime,
             search,
+            getPopularAnime,
+            getUpcomingAnime,
+            getAiringAnime,
         }}>
             {children}
         </GlobalContext.Provider>
