@@ -11,9 +11,11 @@ const SEARCH = "SEARCH";
 const GET_POPULAR_ANIME = "GET_POPULAR_ANIME";
 const GET_UPCOMING_ANIME = "GET_UPCOMING_ANIME";
 const GET_AIRING_ANIME = "GET_AIRING_ANIME";
+const GET_PICTURES = "GET_PICTURES";
 
 const reducer = (state, action) => {
     // change the state based on the action, to not to fetch again.
+    // once get the payload, put it in the state.
     switch(action.type){
         case LOADING:
             return {...state, loading:true};
@@ -25,6 +27,8 @@ const reducer = (state, action) => {
             return {...state, upcomingAnime:action.payload, loading:false};
         case GET_AIRING_ANIME:
             return {...state, airingAnime:action.payload, loading:false};
+        case GET_PICTURES:
+            return {...state, pictures:action.payload, loading:false};
         default:
             return state;
     }
@@ -91,9 +95,9 @@ export const GlobalContextProvider = ({children}) => {
     // fetch airing anime
     const getAiringAnime = async () => {
         dispatch({type: LOADING})
-        const response = await fetch(`${baseUrl}/top/anime?filter=airing&order_by=aired.from`);
+        const response = await fetch(`${baseUrl}/top/anime?filter=airing&order_by=aired?.from`);
         const data = await response.json();
-        console.log(data.data);
+        // console.log(data.data);
         dispatch({type: GET_AIRING_ANIME, payload: data.data});
     }
     
@@ -103,6 +107,15 @@ export const GlobalContextProvider = ({children}) => {
         const response = await fetch(`https://api.jikan.moe/v4/anime?q=${anime}&order_by=popularity&sort=asc&sfw`);
         const data = await response.json();
         dispatch({type: SEARCH, payload: data.data});
+    }
+
+    // get anime pics
+    const getAnimePictures = async (id) => {
+        dispatch({type: LOADING})
+        const response = await fetch(`https://api.jikan.moe/v4/characters/${id}/pictures`);
+        const data = await response.json();
+        dispatch({type: GET_PICTURES, payload: data.data});
+
     }
 
     //initial render
@@ -121,6 +134,7 @@ export const GlobalContextProvider = ({children}) => {
             getPopularAnime,
             getUpcomingAnime,
             getAiringAnime,
+            getAnimePictures,
         }}>
             {children}
         </GlobalContext.Provider>
