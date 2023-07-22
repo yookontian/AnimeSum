@@ -1,11 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
 import { useGlobalContext } from './context/global';
 // BrowserRouter is a component that wraps around the entire app.
 import { BrowserRouter, Route, Routes, Switch } from 'react-router-dom';
-import Popular from './Components/Popular';
 import AnimeItem from './Components/AnimeItem';
 import Homepage from './Components/Homepage';
+import Gallery from './Components/Gallery';
 
 
 function App() {
@@ -17,6 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/anime/:id" element={<AnimeItem />} />
+        <Route path="/character/:id" element={<Gallery />} />
       </Routes>
     </BrowserRouter>
   );
