@@ -4,7 +4,7 @@ I used Jikan API, you can find more information here: [Jikan](https://jikan.moe/
 
 The home page looks like this:
 
-![Home Page](./imgs/homepage.jpg)
+![Home Page](./imgs/homepage1.jpg)
 
 # Getting Started with Create React App
 
