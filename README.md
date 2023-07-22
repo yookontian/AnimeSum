@@ -1,6 +1,6 @@
-This project is based on the [React Tutorial](https://www.youtube.com/watch?v=qOhyFgE-8gY) with some modifications. The goal is to create a web app that allows users to search for anime titles and display the results in a list. The user can then select a title to view more details about it. The user can also save titles to a list of favorites. The user can also view a list of their favorites.
+This project is based on the [React Js Project Tutorial - Build An Anime Website (API Project)](https://www.youtube.com/watch?v=qOhyFgE-8gY) with some modifications. The goal is to create a web app that allows users to search for anime titles and display the results in a list. The user can then select a title to view more details about it. The user can also save titles to a list of favorites. The user can also view a list of their favorites.
 
-I used Jikan API, you can find more information here: (https://jikan.moe/).
+I used Jikan API, you can find more information here: [Jikan](https://jikan.moe/).
 
 # Getting Started with Create React App
 
