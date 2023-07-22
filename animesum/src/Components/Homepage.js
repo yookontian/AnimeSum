@@ -43,7 +43,7 @@ function Homepage(){
                     <div className="filter-btn popular-filter">
                         <button onClick={() =>{
                             setRendered('popular')
-                        }}>人気アニメ</button>
+                        }}>人気アニメ<i className='fas fa-fire'></i></button>
                     </div>
                     <form action="" className="search-form" onSubmit={handleSubmit}>
                         <div className="input-control">
