@@ -11,6 +11,7 @@ function AnimeItem()
     const [characters, setCharacters] = React.useState([]);
     const [showMore, setShowMore] = React.useState(false);
 
+    console.log("anime", anime);
     // destructuring anime
     let {
         title, title_japanese, synopsis, 
@@ -22,6 +23,13 @@ function AnimeItem()
     // if synopsis endwith "[Written by MAL Rewrite]" then remove it.
     if(synopsis?.endsWith("[Written by MAL Rewrite]"))
         synopsis = synopsis?.substring(0, synopsis.length - 24);
+
+    // if status is "Currently Airing", then transmit aired to a string, then aired = substring(0, aired.length - 5)
+    if(status === "Currently Airing" && aired) 
+    {
+        aired = aired?.string;
+        aired = aired.substring(0, aired.length - 5);
+    }
 
     // get anime based on id
     const getAnime = async (anime) => {
@@ -55,7 +63,7 @@ function AnimeItem()
                         <img src={images?.jpg.large_image_url} alt="" />
                     </div>
                     <div className="anime-details">
-                        <p><span>初放送: </span><span>{aired?.string}</span></p>
+                        <p><span>初放送: </span><span>{aired}</span></p>
                         <p><span>レーティング: </span><span>{rating}</span></p>
                         <p><span>得点ランキング:</span><span>{rank} 位</span></p>
                         <p><span>総合得点:</span><span>{score} 点</span></p>
@@ -80,10 +88,9 @@ function AnimeItem()
                         <iframe 
                             src={trailer?.embed_url} 
                             title="Inline Frame Example"
-                            playing={false}
                             width="800"
                             height="450"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen>
                         </iframe> :
                         <h3>Trailer not available</h3>
