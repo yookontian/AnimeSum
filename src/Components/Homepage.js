@@ -47,8 +47,8 @@ function Homepage(){
                     </div>
                     <form action="" className="search-form" onSubmit={handleSubmit}>
                         <div className="input-control">
-                            <input type="text" placeholder="Search Anime" value={search} onChange={handleChange} />
-                            <button type="submit">Search</button>
+                            <input type="text" placeholder="アニメ検索" value={search} onChange={handleChange} />
+                            <button type="submit">検索</button>
                         </div>
                     </form>
                     <div className="filter-btn airing-filter">
