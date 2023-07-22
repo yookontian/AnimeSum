@@ -2,6 +2,10 @@ This project is based on the [React Js Project Tutorial - Build An Anime Website
 
 I used Jikan API, you can find more information here: [Jikan](https://jikan.moe/).
 
+The home page looks like this:
+
+![Home Page](./imgs/homepage.jpg)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
